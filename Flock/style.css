@@ -1,83 +1,90 @@
-.topbar {
-    background-color:#454177;
+html * { /* Global font */
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+}
+
+button { /* Give all buttons rounded egdes and font color */
+    border-radius: 10px;
+    color:#1e215b;
+}
+
+body { 
+    background-color:#bbb7f4;
+    color:#1e215b;
+}
+
+.topbar { /* Styling for header; Page title and menu icon */
+    background-color:#1e215b;
     color:aliceblue; 
 
     display:flex;
     align-items: center;
     justify-content: space-between; 
     padding-inline: 20px;
-    div {
+
+    h1 {
+        font-size: 45px;
+        color:aliceblue; 
+    }
+
+    button {
+        font-size:xx-large;
+    }
+
+    div { /* To create menu icon */
         width: 40px;
         height: 5px;
         background-color:#454177; 
         margin: 6px 0;
+        border-radius: 10px;
     }
 }
 
-h1 {
-    color:aliceblue; 
-    font-size: 40px; 
-}
-
-h2{
-    color:#454177;
-    font-size: 35px;
-}
-
-body {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    margin: 0;
-    background-color:#bbb7f4;
-    color:#454177;
-}
-
-ul {
+.menu { /* Style for menu buttons */
     text-align: center;
     list-style-type:none;
-}
 
-li {
+    li { /* Style for list elements in menus */
     margin-bottom:12px;
-    button {
-        width: 500px;
-        height: 150px;
-        margin:20px;
-        color:aliceblue;
-    }
+        button { 
+            color:#1e215b;
+            font-size: 20px;
+            width: 500px;
+            height: 150px;
+            margin:20px;
+        } 
+    } 
 }
 
-input[type="search"] {
-    color:white;
-    background-color:#8083b7;
-    font-size: 40px;
-    text-align: center;
-    width: 470px; 
-    height: 100px;
-    
+.main-search { /* Style for search input on main page */
+        color:navy;
+        background-color: aliceblue;
+        font-size: 30px;
+        text-align: center;
+        width: 470px; 
+        height: 100px;
+        border-radius: 10px;
 }
 
-section {
+.recents { /* Style for recent destination list */
     margin: 0;
     padding-top: 10px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 10px;
     height:100%;
-    background-color:#454177;
+    background-color:#1e215b;
+    color:aliceblue;
     button {
         text-align:left;
-        background-color:#8083b7;
+        background-color:aliceblue;
         width: 100%;
+        color:#1e215b;
+        padding-left: 20px;
     }
 }
 
-p {
-    color:#bbb7f4; 
-    padding-left: 20px; 
-}
 
-hr {
+hr { /* break line, like after recent */
     color:#8083b7;
-    margin:10px;
+    margin:15px;
 }
-
 
