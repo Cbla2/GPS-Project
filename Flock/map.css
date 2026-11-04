@@ -1,0 +1,158 @@
+/*Styles for the camera map (index.html) and camera details page (camera.html).
+
+/*Camera map*/
+.map-area {
+    position: relative;
+    height: 550px;
+    background-color: hsl(200, 12%, 85%);
+    overflow: hidden;
+}
+
+.map-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/*Camera markers*/
+.cam {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #cf340a;
+    border: 3px solid white;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s;
+}
+
+.cam:hover,
+.cam:focus {
+    transform: translate(-50%, -50%) scale(1.3);
+    outline: 3px solid #6762ac;
+}
+
+/* Cameras that are not on Route 28 are smaller and faded */
+.cam.off-route {
+    width: 22px;
+    height: 22px;
+    opacity: 0.55;
+}
+
+/* The user's current location */
+.you {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: #739beb;
+    border: 3px solid white;
+    box-shadow: 0 0 0 10px rgba(28, 100, 242, 0.2);
+    transform: translate(-50%, -50%);
+}
+
+.map-label {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #454177;
+    transform: translate(-50%, -50%);
+}
+
+.shield {
+    position: absolute;
+    padding: 2px 8px;
+    background-color: white;
+    border: 2px solid #454177;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #454177;
+    transform: translate(-50%, -50%);
+}
+
+.cam-count {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    margin: 0;
+    padding: 10px 16px;
+    background-color: #454177;
+    color: aliceblue;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+/*Camera details page */
+.details-page {
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.camera-card {
+    width: 100%;
+    max-width: 520px;
+    background-color: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.camera-card h2 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 30px;
+}
+
+.camera-card .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #D9480F;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px #D9480F;
+    flex-shrink: 0;
+}
+
+.camera-card dl {
+    margin: 0 0 24px;
+}
+
+.camera-card dt {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b6894;
+}
+
+.camera-card dd {
+    margin: 4px 0 0;
+    font-size: 22px;
+    color: #454177;
+}
+
+.close-btn {
+    display: block;
+    padding: 14px;
+    text-align: center;
+    background-color: #454177;
+    color: aliceblue;
+    border-radius: 10px;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    background-color: #8083b7;
+}
