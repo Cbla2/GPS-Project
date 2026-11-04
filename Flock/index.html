@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel = "stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./map.css">
 </head>
 <body>
     <header class="topbar">
@@ -17,33 +18,55 @@
             </button>
         </a>
     </header>
-    
-    <main>
-        <iframe style ="margin-right:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d99310.46501659253!2d-77.20379549999997!3d38.93650045000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89b635ecb18a793b%3A0x8e62ba5eadfaeaf1!2sMcLean%2C%20VA!5e0!3m2!1sen!2sus!4v1793741355036!5m2!1sen!2sus" 
-            width="100%" 
-            height="550" 
-            style="border:0;" 
-            loading="lazy" 
-            referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+
+    /*Camera map details*/
+    <main class="map-area">
+        <svg class="map-bg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            
+            <path d="M0 25 H100 M0 65 H100 M20 0 V100 M82 0 V100"
+                  stroke="white" stroke-width="10" fill="none" vector-effect="non-scaling-stroke"></path>
+            <rect x="60" y="70" width="18" height="14" rx="2" fill="#D3E4CD"></rect>
+            <path d="M48 100 C52 75 40 55 46 35 S54 10 52 0"
+                  stroke="#D4A72C" stroke-width="22" fill="none" vector-effect="non-scaling-stroke"></path>
+            <path d="M48 100 C52 75 40 55 46 35 S54 10 52 0"
+                  stroke="#F2C94C" stroke-width="16" fill="none" vector-effect="non-scaling-stroke"></path>
+        </svg>
+
+        <span class="map-label" style="left: 64%; top: 4%">Fairfax</span>
+        <span class="map-label" style="left: 64%; top: 94%">Sterling</span>
+        <span class="shield" style="left: 54%; top: 50%">28</span>
+
+        /*cameras on Route 28*/
+        <a class="cam" href="./camera.html?id=1" style="left:49.5%; top: 84%" aria-label="Camera 1 on Route 28"></a>
+        <a class="cam" href="./camera.html?id=2" style="left: 46%; top: 60%" aria-label="Camera 2 on Route 28"></a>
+        <a class="cam" href="./camera.html?id=3" style="left: 46.5%; top: 36%" aria-label="Camera 3 on Route 28"></a>
+        <a class="cam" href="./camera.html?id=4" style="left: 52%; top: 12%" aria-label="Camera 4 on Route 28"></a>
+
+        /*other nearby cameras*/
+        <a class="cam off-route" href="./camera.html?id=5" style="left: 20%; top: 45%" aria-label="Camera 5, not on Route 28"></a>
+        <a class="cam off-route" href="./camera.html?id=6" style="left: 82%; top: 25%" aria-label="Camera 6, not on Route 28"></a>
+        <a class="cam off-route" href="./camera.html?id=7" style="left: 82%; top: 78%" aria-label="Camera 7, not on Route 28"></a>
+
+        /*user's location*/
+        <span class="you" style="left: 48.5%; top: 95%" aria-label="Your location"></span>
+
+        <p class="cam-count">4 cameras on Route 28</p>
     </main>
 
     <section>
         <form style="display: flex; justify-content: center;">
-            <label id="dest"></label>  
-            <input id = "dest" type = "search" placeholder = "⚲ Enter destination", list = "dest-search">
+            <label id="dest"></label>
+            <input id = "dest" type = "search" placeholder = "Enter destination", list = "dest-search">
             <datalist id="dest-search">
                 <option value="George Mason University"></option>
             </datalist>
         </form>
             <p style="font-size:20px">Recent
             <hr>
-            <a href="./route-menu.html">
-                <button>
-                    <p style="font-size:30px;margin-bottom: 0"><b>NAME</b>
-                    <p style="font-size:30px;margin-top: 0">Address
-                </button>
-            </a>
+            <button>
+                <p style="font-size:30px;margin-bottom: 0"><b>NAME</b>
+                <p style="font-size:30px;margin-top: 0">Address
+            </button>
             <hr>
     </section>
 
