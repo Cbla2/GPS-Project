@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flocker Navigation</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./map.css">
+</head>
+<body>
 
+    <div class="nav-screen">
+
+      
+        <div class="nav-alert">
+            <span>&#9888; Flock Camera ahead!</span>
+            <span class="distance">in 500 ft</span>
+        </div>
+
+       
+        <svg class="nav-map" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice">
+            
+            <line x1="-100" y1="110" x2="500" y2="180" stroke="white" stroke-width="14"></line>
+            <line x1="305" y1="-50" x2="255" y2="530" stroke="white" stroke-width="14"></line>
+
+            
+            <line x1="-100" y1="500" x2="500" y2="140" stroke="#6b6b6b" stroke-width="60"></line>
+            
+            <line x1="-100" y1="500" x2="500" y2="140" stroke="#1c64f2" stroke-width="10"></line>
+
+            
+            <polygon points="-28,-20 32,0 -28,20 -14,0" fill="#1e215b"
+                     stroke="white" stroke-width="3"
+                     transform="translate(100,380) rotate(-31)"></polygon>
+
+            
+            <path d="M250 425 C235 405 225 390 225 375 A25 25 0 1 1 275 375 C275 390 265 405 250 425 Z"
+                  fill="#cf340a" stroke="white" stroke-width="3"></path>
+            <text x="250" y="385" font-size="28" font-weight="bold"
+                  fill="white" text-anchor="middle">!</text>
+        </svg>
+
+       
+        <div class="nav-bottom">
+            <span>To: George Mason University</span>
+            <a class="end-btn" href="./index.html">End</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
