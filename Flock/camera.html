@@ -27,9 +27,33 @@
 
                 <dt>Data source</dt>
                 <dd id="cam-source">OpenStreetMap</dd>
+
+                <dt>Route</dt>
+                <dd id="cam-route">Loading..</dd>
             </dl>
             <a class="close-btn" href="./index.html">Close</a>
         </article>
+
+        <script>
+
+            fetch(`/api/cameras/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("cam-title").textContent = data.error;
+                    return;
+                }
+                document.getElementById("cam-title").textContent = data.title;
+                document.getElementById("cam-operator").textContent = data.operator;
+                document.getElementById("cam-location").textContent = data.location;
+                document.getElementById("cam-facing").textContent = data.facing;
+                document.getElementById("cam-source").textContent = data.source;
+                document.getElementById("cam-route").textContent = data.routeLabel;
+            })
+            .catch(() => {
+                document.getElementById("cam-title").textContent = "Couldn't load camera details";
+            });
+    </script>
     </main>
 </body>
 </html>
