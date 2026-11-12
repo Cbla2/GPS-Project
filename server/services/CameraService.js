@@ -31,6 +31,20 @@ class CameraService {
                 }
             };
         }
+    getCameraCounts(route) {
+        const mapTotal  = this.cameraRepository.countAll();
+        const routeTotal = route ? this.cameraRepository.countByRoute(route) : null;            
+        return {
+                status: 200,
+                counts: {
+                    mapTotal,
+                    route,
+                    routeTotal,
+                    countLabel: routeTotal != null ? `${routeTotal} cameras on ${route}` : `${mapTotal} cameras on map`
+                }
+            }
+             
+        }
     }
 
     module.exports = CameraService;
