@@ -35,7 +35,7 @@
         </article>
 
         <script>
-
+            const id = new URLSearchParams(window.location.search).get("id"); // get id from node URL
             fetch(`/api/cameras/${id}`)
             .then(response => response.json())
             .then(data => {
