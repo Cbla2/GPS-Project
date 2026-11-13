@@ -3,7 +3,7 @@ class RouteRepository {
         this.db = db;
     }
 
-    findAll() {
+    getAllRoutes() {
         return this.db.prepare("SELECT * FROM routes").all();
     }
 
