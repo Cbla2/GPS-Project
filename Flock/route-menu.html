@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,47 +7,52 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-      <header class="topbar" >
-         <h1>Available Routes</h1>
-      </header>
-       <h2>Recommended Route</h2>
-       <a href="./index.html?route=Route+28"> 
-       <button>
-          <h2>Route 28 - Fastest Route</h2>
-          <p> X minutes</p>
-          <p> X Flock Cameras</p>
-        </button>
-      </a>
-  
-      <h2> More Routes</h2>
-      <button>
-        <h2>Route A</h2>
-        <p> X minutes</p>
-        <p> X Flock Cameras</p> 
-      </button>
+    <header class="topbar">
+        <h1>Available Routes</h1>
+    </header>
 
-      
-      <button>
-        <h2>Route B</h2>
-        <p> X minutes</p>
-        <p> X Flock Cameras</p>
-      </button>
-          
-        
-        
+    <h2>Recommended Route</h2>
+    <div id="recommended"></div>
 
-      <p>
-        <a href = "./index.html">
-          <button>Back</button>
+    <h2>More Routes</h2>
+    <div id="more"></div>
+
+    <p>
+        <a href="./index.html">
+            <button>Back</button>
         </a>
         <button>Next</button>
-      </p>
+    </p>
+
+    <script>
+        async function showRoutes() {
+            const response = await fetch("/api/routes");
+            const routes = await response.json();
+
+            routes.forEach(route => {
+                const card = `
+                    <a href="./index.html?route=${encodeURIComponent(route.name)}">
+                        <button>
+                            <h2>${route.name}</h2>
+                            <p>${route.minutes} minutes</p>
+                            <p>${route.cameraCount} Flock Cameras</p>
+                        </button>
+                    </a>
+                `;
+
+                if (route.recommended) {
+                    document.getElementById("recommended").innerHTML += card;
+                } else {
+                    document.getElementById("more").innerHTML += card;
+                }
+            });
+        }
+
+        showRoutes();
+    </script>
 </body>
 </html>
-      </p>
-    
 
-        
       
   
        
