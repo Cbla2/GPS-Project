@@ -21,6 +21,15 @@ db.exec(`
     
     `);
 
+//If trips table doesn't exist, create it.
+db.exec(`
+    CREATE TABLE IF NOT EXISTS trips (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    destination TEXT NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+`);
+
     //Sample cameras. 
     const count = db.prepare("SELECT COUNT(*) AS n FROM cameras").get().n;
 
