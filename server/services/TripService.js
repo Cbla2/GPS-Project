@@ -1,6 +1,6 @@
-class CameraService {
+class TripService {
     constructor(tripRepository) {
-        this.trip[Repository = tripRepository;
+        this.tripRepository = tripRepository;
     }
 
 
@@ -47,7 +47,7 @@ class CameraService {
   
     if(require.main === module) {
         const db = require("../db/database");
-        const CameraRepository = require("../repositories/TripRepository");
+        const TripRepository = require("../repositories/TripRepository");
         const service = new TripService(new TripRepository(db));
 
         console.log(service.saveTrip(""));
