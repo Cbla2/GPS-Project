@@ -6,7 +6,7 @@ class RouteService {
     }
 
     rankRoutes() {
-        const routes = this.routeRepository.findAll();
+        const routes = this.routeRepository.getAllRoutes();
 
         if(routes.length === 0) {
             return { error: "Routes not found", status: 404 };
@@ -45,3 +45,4 @@ class RouteService {
 }
 
 module.exports = RouteService;
+
