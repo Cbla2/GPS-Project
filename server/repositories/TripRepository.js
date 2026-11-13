@@ -1,16 +1,16 @@
-class CameraRepository {
+class TripRepository {
     constructor(db) {
         this.db = db;
     }
 
 
 save(destination) {
-  const result = this.db.prepare("INSERT INTO trips (destination) VALUES (?)").run(desination);
+  const result = this.db.prepare("INSERT INTO trips (destination) VALUES (?)").run(destination);
   return this.findById(result.lastInsertRowid);
 }
 
 findById(id) {
-  return this.db.prepare("SELECT * FROM cameras WHERE id = ?").get(id);
+  return this.db.prepare("SELECT * FROM trips WHERE id = ?").get(id);
 }
 
 findRecent(limit) {
@@ -21,6 +21,7 @@ findRecent(limit) {
 deleteOlderThan(limit) {
   this.db.prepare("DELETE FROM trips WHERE id NOT IN (SELECT id FROM trips ORDER BY id DESC LIMIT ?)").run(limit);
 }
+};
   
 
 module.exports = TripRepository;
