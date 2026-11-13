@@ -21,7 +21,7 @@ findRecent(limit) {
 deleteOlderThan(limit) {
   this.db.prepare("DELETE FROM trips WHERE id NOT IN (SELECT id FROM trips ORDER BY id DESC LIMIT ?)").run(limit);
 }
-};
+}
   
 
 module.exports = TripRepository;
