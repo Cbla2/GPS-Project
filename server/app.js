@@ -8,7 +8,7 @@ const CameraService = require("./services/CameraService");
 const createCameraController = require("./controllers/cameraController");
 //Trip apps
 const TripRepository = require("./repositories/TripRepository");
-const TripService = require(".services/TripService");
+const TripService = require("./services/TripService");
 const createTripController = require("./controllers/tripController");
 
 const app = express();
