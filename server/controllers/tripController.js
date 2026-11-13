@@ -3,8 +3,8 @@ const express = require("express");
 function createTripController(tripService) {
   const router = express.Router();
 
-  router.get("/", (req, res) => {
-    const result = cameraService.saveTrip(req.body.destination);
+  router.post("/", (req, res) => {
+    const result = tripService.saveTrip(req.body.destination);
   
     if (result.error) {
       return res.status(result.status).json({ error: result.error })
