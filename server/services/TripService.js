@@ -43,7 +43,7 @@ class CameraService {
 }
         
 
-  module.export = TripService;
+  module.exports= TripService;
   
     if(require.main === module) {
         const db = require("../db/database");
