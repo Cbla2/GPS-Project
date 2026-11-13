@@ -11,42 +11,158 @@
 
     <div class="nav-screen">
 
-      
+        <!-- Camera warning -->
         <div class="nav-alert">
-            <span>&#9888; Flock Camera ahead!</span>
-            <span class="distance">in 500 ft</span>
+            <span id="alert-title">Flock Camera ahead!</span>
+            <span class="distance" id="alert-distance">Loading...</span>
         </div>
 
-       
-        <svg class="nav-map" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice">
-            
-            <line x1="-100" y1="110" x2="500" y2="180" stroke="white" stroke-width="14"></line>
-            <line x1="305" y1="-50" x2="255" y2="530" stroke="white" stroke-width="14"></line>
+        <!-- Navigation map -->
+        <svg class="nav-map" viewBox="0 0 400 480"
+             preserveAspectRatio="xMidYMid slice">
 
-            
-            <line x1="-100" y1="500" x2="500" y2="140" stroke="#6b6b6b" stroke-width="60"></line>
-            
-            <line x1="-100" y1="500" x2="500" y2="140" stroke="#1c64f2" stroke-width="10"></line>
+            <line x1="-100" y1="110" x2="500" y2="180"
+                  stroke="white" stroke-width="14"></line>
 
-            
-            <polygon points="-28,-20 32,0 -28,20 -14,0" fill="#1e215b"
-                     stroke="white" stroke-width="3"
-                     transform="translate(100,380) rotate(-31)"></polygon>
+            <line x1="305" y1="-50" x2="255" y2="530"
+                  stroke="white" stroke-width="14"></line>
 
-            
-            <path d="M250 425 C235 405 225 390 225 375 A25 25 0 1 1 275 375 C275 390 265 405 250 425 Z"
-                  fill="#cf340a" stroke="white" stroke-width="3"></path>
-            <text x="250" y="385" font-size="28" font-weight="bold"
-                  fill="white" text-anchor="middle">!</text>
+            <line x1="-100" y1="500" x2="500" y2="140"
+                  stroke="#6b6b6b" stroke-width="60"></line>
+
+            <line x1="-100" y1="500" x2="500" y2="140"
+                  stroke="#1c64f2" stroke-width="10"></line>
+
+            <!-- Driver's arrow -->
+            <polygon
+                id="driver-marker"
+                points="-28,-20 32,0 -28,20 -14,0"
+                fill="#1e215b"
+                stroke="white"
+                stroke-width="3"
+                transform="translate(100,380) rotate(-31)">
+            </polygon>
+
+            <!-- Camera marker -->
+            <path d="M250 425 C235 405 225 390 225 375
+                     A25 25 0 1 1 275 375
+                     C275 390 265 405 250 425 Z"
+                  fill="#cf340a"
+                  stroke="white"
+                  stroke-width="3"></path>
+
+            <text x="250" y="385" font-size="28"
+                  font-weight="bold" fill="white"
+                  text-anchor="middle">!</text>
         </svg>
 
-       
+        <!-- Bottom buttons -->
         <div class="nav-bottom">
             <span>To: George Mason University</span>
+
+            <button id="drive-btn" class="end-btn" type="button">
+                Drive forward
+            </button>
+
             <a class="end-btn" href="./index.html">End</a>
         </div>
 
     </div>
 
+    <script>
+
+        
+        let position = 0;
+        let route = "Route 28";
+
+        
+        async function updateAlert() {
+
+            let url = "/api/alerts/next?route=" +
+                encodeURIComponent(route) +
+                "&position=" + position;
+
+            try {
+
+                
+                let response = await fetch(url);
+
+                
+                let result = await response.json();
+
+                let title = document.getElementById("alert-title");
+                let distance = document.getElementById("alert-distance");
+
+                
+                if (result.error) {
+                    title.textContent = "Unable to load camera alert";
+                    distance.textContent = result.error;
+                    return;
+                }
+
+                
+                if (result.camera === null) {
+                    title.textContent = "No cameras ahead";
+                    distance.textContent = "";
+                }
+                else {
+                    
+                    title.textContent = "Flock Camera ahead!";
+                    distance.textContent =
+                        "in " + result.distanceMiles + " mi";
+                }
+
+            }
+            catch (error) {
+                document.getElementById("alert-title").textContent =
+                    "Could not connect to server";
+
+                document.getElementById("alert-distance").textContent = "";
+            }
+        }
+
+        
+        function moveCar() {
+
+            let car = document.getElementById("driver-marker");
+
+            let x = 100 + position * 2.5;
+            let y = 380 - position * 1.5;
+
+            car.setAttribute(
+                "transform",
+                "translate(" + x + "," + y + ") rotate(-31)"
+            );
+        }
+
+        
+        document.getElementById("drive-btn").addEventListener(
+            "click",
+            function() {
+
+                
+                position = position + 10;
+
+                
+                if (position >= 100) {
+                    position = 100;
+                    this.disabled = true;
+                }
+
+                
+                moveCar();
+
+                
+                updateAlert();
+            }
+        );
+
+        
+        updateAlert();
+
+    </script>
+
 </body>
 </html>
+
+
