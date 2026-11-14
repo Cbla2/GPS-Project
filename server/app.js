@@ -8,6 +8,8 @@ const createCameraController = require("./controllers/cameraController");
 const RouteRepository = require("./repositories/routeRepository");
 const RouteService = require("./services/RouteService");
 const createRouteController = require("./controllers/routeController");
+const AlertService = require("./services/AlertService");
+const createAlertController = require("./controllers/alertController");
 
 
 const app = express();
@@ -16,10 +18,14 @@ app.use(express.static(path.join(__dirname, "..", "Flock")));
 
 
 const cameraRepository = new CameraRepository(db);
+
 const cameraService = new CameraService(cameraRepository);
 app.use("/api/cameras", createCameraController(cameraService));
 const routeService = new RouteService(new RouteRepository(db), cameraRepository);
 app.use("/api/routes", createRouteController(routeService));
+
+const alertService = new AlertService(cameraRepository);
+app.use("/api/alerts", createAlertController(alertService));
 
 const PORT = 3000;
 app.listen(PORT, () => {
