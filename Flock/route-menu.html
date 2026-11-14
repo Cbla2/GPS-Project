@@ -1,59 +1,66 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Route Menu</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <header class="topbar">
-        <h1>Available Routes</h1>
-    </header>
 
-    <h2>Recommended Route</h2>
-    <div id="recommended"></div>
+<script>
+    async function showRoutes() {
+        let routes = [];
 
-    <h2>More Routes</h2>
-    <div id="more"></div>
-
-    <p>
-        <a href="./index.html">
-            <button>Back</button>
-        </a>
-        <button>Next</button>
-    </p>
-
-    <script>
-        async function showRoutes() {
+        try {
             const response = await fetch("/api/routes");
-            const routes = await response.json();
 
-            routes.forEach(route => {
-                const card = `
-                    <a href="./navigate.html?route=${encodeURIComponent(route.road)}">
-                        <button>
-                            <h2>${route.name}</h2>
-                            <p>${route.minutes} minutes</p>
-                            <p>${route.cameraCount} Flock Cameras</p>
-                        </button>
-                    </a>
-                `;
+            if (!response.ok) {
+                throw new Error("Server not available");
+            }
 
-                if (route.recommended) {
-                    document.getElementById("recommended").innerHTML += card;
-                } else {
-                    document.getElementById("more").innerHTML += card;
+            routes = await response.json();
+        }
+        catch (error) {
+            routes = [
+                {
+                    name: "Route 28",
+                    road: "Route 28",
+                    minutes: 20,
+                    cameraCount: 0,
+                    recommended: true
+                },
+                {
+                    name: "Route 29",
+                    road: "Route 29",
+                    minutes: 25,
+                    cameraCount: 2,
+                    recommended: false
+                },
+                {
+                    name: "Route 66",
+                    road: "Route 66",
+                    minutes: 30,
+                    cameraCount: 4,
+                    recommended: false
                 }
-            });
+            ];
         }
 
-        showRoutes();
-    </script>
-</body>
-</html>
+        routes.forEach(route => {
+            const card = `
+                <a href="./navigate.html?route=${encodeURIComponent(route.road)}">
+                    <button>
+                        <h2>${route.name}</h2>
+                        <p>${route.minutes} minutes</p>
+                        <p>${route.cameraCount} Flock Cameras</p>
+                    </button>
+                </a>
+            `;
 
-      
+            if (route.recommended) {
+                document.getElementById("recommended").innerHTML += card;
+            } else {
+                document.getElementById("more").innerHTML += card;
+            }
+        });
+    }
+
+    showRoutes();
+</script>
+
   
        
         
