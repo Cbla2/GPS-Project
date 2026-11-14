@@ -13,7 +13,7 @@ class RouteService {
         }
 
         const rankedRoutes = routes.map(route => {
-            const cameras = this.cameraRepository.findByRoute(route.name);
+            const cameras = this.cameraRepository.findByRoute(route.road);
 
             return {
                 id: route.id,
@@ -24,19 +24,18 @@ class RouteService {
             };
         });
 
-        const fewest = Math.min(...rankedRoutes.map(route => route.cameraCount));
-
-        rankedRoutes.forEach(route => {
-            route.recommended = route.cameraCount === fewest;
-        });
-
-        rankedRoutes.sort((a, b) => {
-            if(a.recommended !== b.recommended) {
-                return a.recommended ? -1 : 1;
+       //Fewest cameras first. Ties go to shorter drive time
+        rankedRoutes.sort((a,b) => {
+            if(a.cameraCount !== b.cameraCount) {
+                return a.cameraCount - b.cameraCount;
             }
             return a.minutes - b.minutes;
         });
 
+        rankedRoutes.forEach((route,index) => {
+            route.recommended = index === 0;
+        });
+            
         return {
             status: 200,
             routes: rankedRoutes
