@@ -1,11 +1,11 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Route Menu</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header class="topbar">
@@ -14,8 +14,6 @@
 
     <h2>Recommended Route</h2>
     <div id="recommended">
-        <p>TEST ROUTE - 20 minutes - 0 Cameras</p>
-
         <a href="./navigate.html?route=Route%2028">
             <button>
                 <h2>Route 28</h2>
@@ -48,7 +46,7 @@
         <a href="./index.html">
             <button>Back</button>
         </a>
-        <button>Next</button>
+        <button type="button">Next</button>
     </p>
 
     <script>
@@ -62,8 +60,15 @@
 
                 const routes = await response.json();
 
-                document.getElementById("recommended").innerHTML = "";
-                document.getElementById("more").innerHTML = "";
+                if (!Array.isArray(routes)) {
+                    throw new Error("Invalid route data");
+                }
+
+                const recommended = document.getElementById("recommended");
+                const more = document.getElementById("more");
+
+                recommended.innerHTML = "";
+                more.innerHTML = "";
 
                 routes.forEach(route => {
                     const card = `
@@ -77,9 +82,9 @@
                     `;
 
                     if (route.recommended) {
-                        document.getElementById("recommended").innerHTML += card;
+                        recommended.innerHTML += card;
                     } else {
-                        document.getElementById("more").innerHTML += card;
+                        more.innerHTML += card;
                     }
                 });
             }
@@ -92,3 +97,5 @@
     </script>
 </body>
 </html>
+
+
