@@ -20,7 +20,8 @@ db.exec(`
         )
     `);
 
-    db.exec(`
+//If trips table doesn't exist, create it.
+db.exec(`
     CREATE TABLE IF NOT EXISTS trips (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     destination TEXT NOT NULL,
