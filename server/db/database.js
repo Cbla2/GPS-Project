@@ -1,3 +1,4 @@
+
 const Database = require("better-sqlite3");
 const path = require("path");
 
@@ -54,7 +55,6 @@ if (routeCount === 0) {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             `);
 
-
             insert.run(1, "Camera 1 · Route 28", "County police", "Route 28 northbound, near Sterling", "South (reads oncoming plates)", "OpenStreetMap", "Route 28", 49.5, 84);
             insert.run(2, "Camera 2 · Route 28", "County police", "Route 28 northbound, mid-route", "South (reads oncoming plates)", "OpenStreetMap", "Route 28", 46, 60);
             insert.run(3, "Camera 3 · Route 28", "County police", "Route 28 southbound, mid-route", "North (reads oncoming plates)", "OpenStreetMap", "Route 28", 46.5, 36);
@@ -69,4 +69,5 @@ if (routeCount === 0) {
     //For testing. Will only run when you run this file.
     if (require.main === module) {
         console.log("Cameras in database:", db.prepare("SELECT COUNT(*) AS n FROM cameras").get().n);
+        console.log("Routes in database:", db.prepare("SELECT COUNT(*) AS n FROM routes").get().n);
     }
