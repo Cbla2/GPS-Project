@@ -35,24 +35,27 @@
         </article>
 
         <script>
-            const id = new URLSearchParams(window.location.search).get("id"); // get id from node URL
-            fetch(`/api/cameras/${id}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById("cam-title").textContent = data.error;
-                    return;
-                }
-                document.getElementById("cam-title").textContent = data.title;
-                document.getElementById("cam-operator").textContent = data.operator;
-                document.getElementById("cam-location").textContent = data.location;
-                document.getElementById("cam-facing").textContent = data.facing;
-                document.getElementById("cam-source").textContent = data.source;
-                document.getElementById("cam-route").textContent = data.routeLabel;
-            })
-            .catch(() => {
-                document.getElementById("cam-title").textContent = "Couldn't load camera details";
-            });
+           function showDetails(camera) {
+               document.getElementById("cam-title").textContent = camera.title;
+               document.getElementById("cam-operator").textContent = camera.operator;
+               document.getElementById("cam-location").textContent = camera.location;
+               document.getElementById("cam-facing").textContent = camera.facing;
+               document.getElementById("cam-source").textContent = camera.source;
+               document.getElementById("cam-route").textContent = camera.routeLabel;
+           }
+
+            function showError(message) {
+                document.getElementById("cam-title").textContent = message;
+            }
+
+            function loadCamera(id) {
+                fetch(`/api/cameras/${id}`)
+                .then(response => response.json())
+                .then(data => data.error ? showError(data.error) : showDetails(data))
+                .catch(() => showError("Could not load camera details"));
+            }
+
+            loadCamera(new URLSearchParams(window.location.search).get("id"));
     </script>
     </main>
 </body>
