@@ -5,6 +5,9 @@ const db = require("./db/database");
 const CameraRepository = require("./repositories/CameraRepository");
 const CameraService = require("./services/CameraService");
 const createCameraController = require("./controllers/cameraController");
+const RouteRepository = require("./repositories/routeRepository");
+const RouteService = require("./services/RouteService");
+const createRouteController = require("./controllers/routeController");
 const AlertService = require("./services/AlertService");
 const createAlertController = require("./controllers/alertController");
 
@@ -18,6 +21,8 @@ const cameraRepository = new CameraRepository(db);
 
 const cameraService = new CameraService(cameraRepository);
 app.use("/api/cameras", createCameraController(cameraService));
+const routeService = new RouteService(new RouteRepository(db), cameraRepository);
+app.use("/api/routes", createRouteController(routeService));
 
 const alertService = new AlertService(cameraRepository);
 app.use("/api/alerts", createAlertController(alertService));
