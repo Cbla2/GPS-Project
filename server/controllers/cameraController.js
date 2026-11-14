@@ -12,14 +12,16 @@ function createCameraController(cameraService) {
     res.json(result.counts);
     });
 
-  router.get("/:id", (req, res) => {
+  function getCamera(req, res) {
     const result = cameraService.getCameraDetails(req.params.id);
 
     if (result.error) {
       return res.status(result.status).json({ error: result.error });
     }
     res.json(result.camera);
-  });
+  }
+
+  router.get("/:id", getCamera);
 
   return router;
 }
