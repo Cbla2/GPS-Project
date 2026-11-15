@@ -12,6 +12,8 @@
         <h1>Available Routes</h1>
     </header>
 
+    <p id="route-message"></p>
+
     <h2>Recommended Route</h2>
     <div id="recommended">
         <a href="./navigate.html?route=Route%2028">
@@ -50,6 +52,10 @@
     </p>
 
     <script>
+        function showError(message) {
+            document.getElementById("route-message").textContent = message;
+        }
+
         async function showRoutes() {
             try {
                 const response = await fetch("/api/routes");
@@ -89,7 +95,7 @@
                 });
             }
             catch (error) {
-                console.log("Showing example routes");
+                showError("Could not load routes. Showing example routes instead.");
             }
         }
 
@@ -97,5 +103,3 @@
     </script>
 </body>
 </html>
-
-
