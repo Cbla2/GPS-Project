@@ -9,23 +9,26 @@ const db = new Database(path.join(__dirname, "flocker.db"));
 db.exec(`
     CREATE TABLE IF NOT EXISTS cameras (
         id  INTEGER PRIMARY KEY,
-        title TEXT NOT NULL,
-        operator TEXT NOT NULL,
-        location TEXT NOT NULL,
-        facing TEXT NOT NULL,
-        source TEXT NOT NULL,
-        route TEXT,
-        map_left REAL NOT NULL,
-        map_top REAL NOT NULL
+        latitude REAL NOT NULL,
+        longitude REAL NOT NULL,
+        operator TEXT,
+        direction TEXT,
+        manufacturer TEXT,
+        source TEXT NOT NULL DEFAULT 'OpenStreetMap'
         )
     `);
 
-//If trips table doesn't exist, create it.
+//Look cameras up by location.
+db.exec(`
+    CREATE INDEX IF NOT EXISTS idx_cameras_location ON cameras (latitude, longitude)
+`);
+
 db.exec(`
     CREATE TABLE IF NOT EXISTS trips (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     destination TEXT NOT NULL,
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    
     )
 `);
 
@@ -47,25 +50,9 @@ if (routeCount === 0) {
     insertRoute.run(3, "Route 50", 27, "Route 50");
 }
 
-    //Sample cameras. 
-    const count = db.prepare("SELECT COUNT(*) AS n FROM cameras").get().n;
-
-    if (count === 0) {
-        const insert = db.prepare(`
-            INSERT INTO cameras (id, title, operator, location, facing, source, route, map_left, map_top)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `);
-
-            insert.run(1, "Camera 1 · Route 28", "County police", "Route 28 northbound, near Sterling", "South (reads oncoming plates)", "OpenStreetMap", "Route 28", 49.5, 84);
-            insert.run(2, "Camera 2 · Route 28", "County police", "Route 28 northbound, mid-route", "South (reads oncoming plates)", "OpenStreetMap", "Route 28", 46, 60);
-            insert.run(3, "Camera 3 · Route 28", "County police", "Route 28 southbound, mid-route", "North (reads oncoming plates)", "OpenStreetMap", "Route 28", 46.5, 36);
-            insert.run(4, "Camera 4 · Route 28", "City police", "Route 28 southbound, near Fairfax", "North (reads oncoming plates)", "OpenStreetMap", "Route 28", 52, 12);
-            insert.run(5, "Camera 5", "Homeowners association", "Neighborhood entrance, west of Route 28", "East", "OpenStreetMap", null, 20, 45);
-            insert.run(6, "Camera 6", "Shopping center", "Parking lot entrance, east of Route 28", "West", "OpenStreetMap", null, 82, 25);
-            insert.run(7, "Camera 7", "County police", "Side road near the park", "North", "OpenStreetMap", null, 82, 78);
-    }
 
     module.exports = db;
+    
 
     //For testing. Will only run when you run this file.
     if (require.main === module) {
