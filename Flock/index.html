@@ -28,7 +28,7 @@
     </main>
 
     <script>
-                const map = L.map("map").setView([38.95, -77.40], 13);
+        const map = L.map("map").setView([38.95, -77.40], 13);
 
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
@@ -36,6 +36,12 @@
         }).addTo(map)
 
         const cameraLayer = L.layerGroup().addTo(map);
+
+        var userIcon = new L.circleMarker([50.505, 30.57], {
+            radius: 8, color: "#FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
+        });
+        userIcon.addTo(map);
+        getLocation();
 
         function showCameras(data) {
             cameraLayer.clearLayers();
@@ -77,15 +83,35 @@
         map.on("moveend", loadCameras);
         loadCameras();
 
-        map.locate({setViewe: true, maxZoom: 14});
-        map.on("locationfound", event => {
-            L.circleMarker(event.latlng, {
-            radius: 8, color: "#FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
-            }).addTo(map).bindTooltip("You are here");
-        });
+        map.locate({setView: true, maxZoom: 14});
 
-    </script>
+        function getLocation() {
+        if (navigator.geolocation) {
+            let firstTime = true
+            navigator.geolocation.watchPosition(success, error);
+            
+        } else {
+            console.error("Geolocation Failed.");
+        }
+        }
+        
+        function success(position) {
+            const latlng = [position.coords.latitude, position.coords.longitude];
+            userIcon.setLatLng(latlng).addTo(map).bindTooltip("You are here");
+            if (firstTime) {
+                map.setView(lastLatLng, 14);
+                firstTime = false; 
+            }
 
+            (err) => console.warn(err.code, err.message)
+        }
+        
+        function error() {
+            alert("No position available.");
+        }
+
+</script>
+	
     <section class="recents">
         <form action="./route-menu.html" method="get" style="display: flex; justify-content: center;">
             <label id="dest"></label>
