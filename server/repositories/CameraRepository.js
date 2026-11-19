@@ -1,4 +1,3 @@
-const { Route } = require("express");
 
 class CameraRepository {
     constructor(db) {

@@ -37,12 +37,6 @@
 
         const cameraLayer = L.layerGroup().addTo(map);
 
-        var userIcon = new L.circleMarker([50.505, 30.57], {
-            radius: 8, color: "#FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
-        });
-        userIcon.addTo(map);
-        getLocation();
-
         function showCameras(data) {
             cameraLayer.clearLayers();
             document.getElementById("camera-count").textContent = data.message;
@@ -85,35 +79,39 @@
 
         map.locate({setView: true, maxZoom: 14});
 
-        function getLocation() {
-        if (navigator.geolocation) {
-            let firstTime = true
-            navigator.geolocation.watchPosition(success, error);
-            
-        } else {
-            console.error("Geolocation Failed.");
-        }
-        }
-        
-        function success(position) {
-            const latlng = [position.coords.latitude, position.coords.longitude];
-            userIcon.setLatLng(latlng).addTo(map).bindTooltip("You are here");
-            if (firstTime) {
-                map.setView(lastLatLng, 14);
-                firstTime = false; 
-            }
+       let userIcon = null;
+       let firstFix = true;
 
-            (err) => console.warn(err.code, err.message)
+       function showUser(position) {
+        const latlng = [position.coords.latitude, position.coords.longitude];
+
+
+        if(!userIcon) {
+            userIcon = L.circleMarker(latlng, {
+                radius: 8, color: "FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
+            }).addTo(map).bindTooltip("You are here");
+        } else {
+            userIcon.setLatLng(latlng);
         }
-        
-        function error() {
-            alert("No position available.");
+
+        if(firstFix) {
+            map.setView(latlng, 14);
+            firstFix = false;
         }
+       }
+
+       function locationError(err) {
+        console.warn("Location unavailable:", err.message);
+       }
+
+       if(navigator.geolocation) {
+        navigator.geolocation.watchPosition(showUser, locationError);
+       }
 
 </script>
 	
     <section class="recents">
-        <form action="./route-menu.html" method="get" style="display: flex; justify-content: center;">
+            <form onsubmit="return false;" style="display: flex; justify-content: center;">
             <label id="dest"></label>
             <input id = "dest" class = "main-search" type = "search" placeholder = "Enter destination", list = "dest-search">
             <datalist id="dest-search">

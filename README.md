@@ -1,4 +1,4 @@
-## How to run (real map branch)
+## How to run
 
 1. Install [Node.js](https://nodejs.org) (v18 or newer).
 
@@ -6,7 +6,7 @@
 
 ```
 git fetch
-git checkout real-map
+git checkout main
 git pull
 npm install
 ```
@@ -20,7 +20,7 @@ if it says server is busy, wait a few minutes and try again.
 4. Build the database and import the cameras:
 ```
 
-node server/db/importCamera.js
+node server/db/importCameras.js
 ```
 
 5. Start the app
