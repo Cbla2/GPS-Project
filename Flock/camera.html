@@ -28,8 +28,6 @@
                 <dt>Data source</dt>
                 <dd id="cam-source">OpenStreetMap</dd>
 
-                <dt>Route</dt>
-                <dd id="cam-route">Loading..</dd>
             </dl>
             <a class="close-btn" href="./index.html">Close</a>
         </article>
@@ -41,7 +39,6 @@
                document.getElementById("cam-location").textContent = camera.location;
                document.getElementById("cam-facing").textContent = camera.facing;
                document.getElementById("cam-source").textContent = camera.source;
-               document.getElementById("cam-route").textContent = camera.routeLabel;
            }
 
             function showError(message) {
