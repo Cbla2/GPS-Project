@@ -37,6 +37,19 @@
 
         const cameraLayer = L.layerGroup().addTo(map);
 
+        const areaParams = new URLSearchParams(window.location.search);
+        const showingRoute = areaParams.has("north");
+
+        if (showingRoute) {
+            map.fitBounds([
+                [Number(areaParams.get("south")), Number(areaParams.get("west"))],
+                [Number(areaParams.get("north")), Number(areaParams.get("east"))]
+            ])
+        }
+
+
+
+
         function showCameras(data) {
             cameraLayer.clearLayers();
             document.getElementById("camera-count").textContent = data.message;
@@ -77,10 +90,9 @@
         map.on("moveend", loadCameras);
         loadCameras();
 
-        map.locate({setView: true, maxZoom: 14});
 
        let userIcon = null;
-       let firstFix = true;
+      let firstFix = !showingRoute;
 
        function showUser(position) {
         const latlng = [position.coords.latitude, position.coords.longitude];
@@ -88,7 +100,7 @@
 
         if(!userIcon) {
             userIcon = L.circleMarker(latlng, {
-                radius: 8, color: "FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
+                radius: 8, color: "#FFFFFF", weight: 3, fillColor: "#1C64F2", fillOpacity: 1
             }).addTo(map).bindTooltip("You are here");
         } else {
             userIcon.setLatLng(latlng);
@@ -111,7 +123,7 @@
 </script>
 	
     <section class="recents">
-            <form onsubmit="return false;" style="display: flex; justify-content: center;">
+            <form action="./route-menu.html" method="get" style="display: flex; justify-content: center;">
             <label id="dest"></label>
             <input id = "dest" class = "main-search" type = "search" placeholder = "Enter destination", list = "dest-search">
             <datalist id="dest-search">

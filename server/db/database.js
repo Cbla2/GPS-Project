@@ -32,24 +32,36 @@ db.exec(`
     )
 `);
 
+const routeColumns = db.prepare("PRAGMA table_info(routes)").all().map(column => column.name);
+if (routeColumns.length > 0 && !routeColumns.includes("north")) {
+    db.exec("DROP TABLE routes");
+}
+
 db.exec(`
+
     CREATE TABLE IF NOT EXISTS routes (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     minutes INTEGER NOT NULL,
-    road TEXT NOT NULL
+    road TEXT NOT NULL,
+    north REAL NOT NULL,
+    south REAL NOT NULL,
+    east REAL NOT NULL,
+    west REAL NOT NULL
     )
-`);
+`)
 
 const routeCount = db.prepare("SELECT COUNT(*) AS n FROM routes").get().n;
 
 if (routeCount === 0) {
-    const insertRoute = db.prepare("INSERT INTO routes (id, name, minutes, road) VALUES (?, ?, ?, ?)");
-    insertRoute.run(1, "Route 28", 18, "Route 28");
-    insertRoute.run(2, "Fairfax County Pkwy", 24, "Fairfax County Pkwy");
-    insertRoute.run(3, "Route 50", 27, "Route 50");
+  const insertRoute = db.prepare(`
+    INSERT INTO routes (id, name, minutes, road, north, south, east, west)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+    insertRoute.run(1, "Route 28", 18, "Route 28", 39.03, 38.84, -77.42, -77.46);
+    insertRoute.run(2, "Fairfax County Pkwy", 24, "Fairfax County Pkwy", 39.02, 38.84, -77.33, -77.40);
+    insertRoute.run(3, "Route 50", 27, "Route 50", 38.90, 38.85, -77.30, -77.45);
 }
-
 
     module.exports = db;
     

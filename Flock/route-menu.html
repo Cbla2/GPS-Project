@@ -16,7 +16,7 @@
 
     <h2>Recommended Route</h2>
     <div id="recommended">
-        <a href="./navigate.html?route=Route%2028">
+                        <a href="./index.html">
             <button>
                 <h2>Route 28</h2>
                 <p>20 minutes</p>
@@ -78,7 +78,7 @@
 
                 routes.forEach(route => {
                     const card = `
-                        <a href="./navigate.html?route=${encodeURIComponent(route.road)}">
+                            <a href="./index.html?north=${route.north}&south=${route.south}&east=${route.east}&west=${route.west}">
                             <button>
                                 <h2>${route.name}</h2>
                                 <p>${route.minutes} minutes</p>

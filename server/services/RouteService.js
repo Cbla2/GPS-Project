@@ -13,14 +13,18 @@ class RouteService {
         }
 
         const rankedRoutes = routes.map(route => {
-            const cameras = this.cameraRepository.findByRoute(route.road);
+             const cameraCount = this.cameraRepository.countInArea(route.north, route.south, route.east, route.west);
 
             return {
                 id: route.id,
                 name: route.name,
                 minutes: route.minutes,
                 road: route.road,
-                cameraCount: cameras.length
+                north: route.north,
+                south: route.south,
+                east: route.east,
+                west: route.west,
+                cameraCount: cameraCount
             };
         });
 

@@ -11,16 +11,21 @@ const TripRepository = require("./repositories/TripRepository");
 const TripService = require("./services/TripService");
 const createTripController = require("./controllers/tripController");
 
+const RouteRepository = require("./repositories/routeRepository");
+const RouteService = require("./services/RouteService");
+const createRouteController = require("./controllers/routeController");
 
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "Flock")));
 
-
 const cameraRepository = new CameraRepository(db);
 
 const cameraService = new CameraService(cameraRepository);
 app.use("/api/cameras", createCameraController(cameraService));
+
+const routeService = new RouteService(new RouteRepository(db), cameraRepository);
+app.use("/api/routes", createRouteController(routeService));
 
 const tripRepository = new TripRepository(db);
 const tripService = new TripService(tripRepository);
